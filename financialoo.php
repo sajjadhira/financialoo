@@ -175,3 +175,6 @@ function financialoo_deactivation_calllback()
 }
 
 register_deactivation_hook(__FILE__, 'financialoo_deactivation_calllback');
+
+// include files
+require_once FINANCIALOO_PLUGIN_DIR . '/init.php';
