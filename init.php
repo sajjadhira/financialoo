@@ -1,6 +1,12 @@
 <?php
 
 
+# inclusw styles.php file
+
+require_once FINANCIALOO_PLUGIN_DIR . '/styles.php';
+require_once FINANCIALOO_PLUGIN_DIR . '/functions.php';
+
+
 # add menu
 
 function financialoo_add_menu()
@@ -10,9 +16,11 @@ function financialoo_add_menu()
         __(ucfirst(FINANCIALOO_NAME), FINANCIALOO_NAME),
         'manage_options',
         FINANCIALOO_NAME,
-        FINANCIALOO_PREFIX . 'menu_page',
+        FINANCIALOO_PREFIX . 'home_page',
         'dashicons-chart-area'
     );
+
+    include_page('Home', FINANCIALOO_PREFIX . 'home_page');
 
     # add submenu
     # lets make an array of submenus
@@ -36,6 +44,10 @@ function financialoo_add_menu()
             FINANCIALOO_PREFIX .  $key,
             FINANCIALOO_PREFIX . $key
         );
+
+        $title = $value;
+        $function_name = FINANCIALOO_PREFIX . $key;
+        include_page($title, $function_name);
     }
 }
 
