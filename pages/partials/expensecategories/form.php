@@ -118,13 +118,13 @@ if ($action == "form") {
 
         <div class="mb-4 mt-4">
             <label for="name" class="block text-gray-700 font-medium mb-2">Category Name</label>
-            <input name="name" id="name" class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Category Name" value="<?php echo $category_name; ?>" required>
+            <input name="name" id="name" class="w-2/3 px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Category Name" value="<?php echo $category_name; ?>" required>
 
         </div>
 
         <div class="mb-4 mt-4">
             <label for="status" class="block text-gray-700 font-medium mb-2">Status</label>
-            <select name="status" id="status" class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" required>
+            <select name="status" id="status" class="w-2/3 px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" required>
                 <option value="">Select Status</option>
                 <?php foreach ($statuses as $key => $value) { ?>
                     <option value="<?php echo $key; ?>" <?php if ($category_status == $key) {
@@ -141,7 +141,7 @@ if ($action == "form") {
         <?php wp_nonce_field(FINANCIALOO_PREFIX . 'expense_category_nonce_action', FINANCIALOO_PREFIX . 'expense_category_nonce_field'); ?>
 
         <div class="mb-4 mt-4">
-            <button type="submit" name="expense_category_submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+            <button type="submit" name="expense_category_submit" class="w-2/3 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
                 <?php echo $action_button; ?>
             </button>
         </div>
