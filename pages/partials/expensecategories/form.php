@@ -98,6 +98,9 @@ if ($action == "form") {
                         $message = ['type' => 'success', 'color' => 'green', 'message' => 'Expense Category updated successfully.'];
                     }
                 }
+
+                $category_name = $name;
+                $category_status = $status;
             }
         }
     }
