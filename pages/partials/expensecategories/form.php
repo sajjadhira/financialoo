@@ -11,6 +11,16 @@ if (isset($_GET['action'])) {
 
 if ($action == "form") {
 
+    $statuses = [
+        0 => 'Inactive',
+        1 => 'Active'
+    ];
+
+    $id = null;
+    $action_button = 'Save';
+    $category_name = '';
+    $category_status = '';
+
     global $wpdb;
     $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'expenses_categories';
 
@@ -30,15 +40,8 @@ if ($action == "form") {
             $id = $results[0]->id;
             $action_button = 'Update';
             $category_name = $results[0]->name;
-        } else {
-            $id = null;
-            $action_button = 'Save';
-            $category_name = '';
+            $category_status = $results[0]->status;
         }
-    } else {
-        $id = null;
-        $action_button = 'Save';
-        $category_name = '';
     }
 
     if (isset($_POST["expense_category_submit"])) {
@@ -46,15 +49,16 @@ if ($action == "form") {
         if (!isset($_POST[FINANCIALOO_PREFIX . 'expense_category_nonce_field']) || !wp_verify_nonce($_POST[FINANCIALOO_PREFIX . 'expense_category_nonce_field'], FINANCIALOO_PREFIX . 'expense_category_nonce_action')) {
             $message = ['type' => 'error', 'color' => 'red', 'message' => 'Sorry, your nonce did not verify.'];
         } else {
-            if (!isset($_POST["name"])) {
+            if (!isset($_POST["name"]) || !isset($_POST["status"])) {
                 $message = ['type' => 'error', 'color' => 'red', 'message' => 'Please fill all fields.'];
             } else {
-                $name = sanitize_textarea_field($_POST["name"]);
+                $name = sanitize_text_field($_POST["name"]);
+                $status = sanitize_text_field($_POST["status"]);
 
                 # now check expense category name already exists or not
 
 
-                $sql = "SELECT * FROM $table_name WHERE name = '$name'";
+                $sql = "SELECT * FROM $table_name WHERE name = '$name' and id != $id";
                 $results = $wpdb->get_results($sql);
 
                 # count rows
@@ -71,7 +75,7 @@ if ($action == "form") {
                             $table_name,
                             array(
                                 'name' => $name,
-                                'status' => 0,
+                                'status' => $status,
                                 'created_at' => current_time('mysql')
                             )
                         );
@@ -85,7 +89,7 @@ if ($action == "form") {
                             $table_name,
                             array(
                                 'name' => $name,
-                                'status' => 0,
+                                'status' => $status,
                                 'created_at' => current_time('mysql')
                             ),
                             array('id' => $id)
@@ -112,6 +116,19 @@ if ($action == "form") {
         <div class="mb-4 mt-4">
             <label for="name" class="block text-gray-700 font-medium mb-2">Category Name</label>
             <input name="name" id="name" class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Category Name" value="<?php echo $category_name; ?>" required>
+
+        </div>
+
+        <div class="mb-4 mt-4">
+            <label for="status" class="block text-gray-700 font-medium mb-2">Status</label>
+            <select name="status" id="status" class="w-full px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" required>
+                <option value="">Select Status</option>
+                <?php foreach ($statuses as $key => $value) { ?>
+                    <option value="<?php echo $key; ?>" <?php if ($category_status == $key) {
+                                                            echo 'selected';
+                                                        } ?>><?php echo $value; ?></option>
+                <?php } ?>
+            </select>
 
         </div>
 
