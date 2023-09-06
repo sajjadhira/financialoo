@@ -6,11 +6,15 @@
 require_once FINANCIALOO_PLUGIN_DIR . '/styles.php';
 require_once FINANCIALOO_PLUGIN_DIR . '/functions.php';
 
+# inti action
+
+
 
 # add menu
 
 function financialoo_add_menu()
 {
+
     add_menu_page(
         __(ucfirst(FINANCIALOO_NAME), FINANCIALOO_NAME),
         __(ucfirst(FINANCIALOO_NAME), FINANCIALOO_NAME),
