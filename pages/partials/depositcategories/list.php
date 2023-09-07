@@ -5,12 +5,12 @@
     <?php } ?>
 
 
-    <h2 class="text-xl font-bold mb-4">List of Expense Categories</h2>
+    <h2 class="text-xl font-bold mb-4">List of Deposit Categories</h2>
 
     <!-- add a `add new prompt` button to right -->
 
     <div class="flex justify-end mb-4">
-        <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'expense_categories&action=form') ?>" class="bg-blue-500 hover:bg-white-700 text-white font-bold py-2 px-4 rounded">Add New</a>
+        <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'deposit_categories&action=form') ?>" class="bg-blue-500 hover:bg-white-700 text-white font-bold py-2 px-4 rounded">Add New</a>
     </div>
 
     <div class="relative overflow-x-auto">
@@ -21,7 +21,7 @@
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Total Expenses
+                        Total Deposit
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Status
@@ -37,7 +37,7 @@
 
                 <?php
                 global $wpdb;
-                $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'expenses_categories';
+                $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'deposite_categories';
                 $sql = "SELECT * FROM $table_name";
                 $results = $wpdb->get_results($sql);
                 foreach ($results as $result) {
@@ -54,7 +54,7 @@
 
                             // get sum of amout column from expenses table where category_id = $result->id
 
-                            $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'expenses';
+                            $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'deposits';
                             $sql = "SELECT SUM(amount) as total FROM $table_name WHERE category_id = $result->id";
                             $total = $wpdb->get_var($sql);
                             echo $total ? $total : 0;
@@ -72,8 +72,8 @@
                         <td class="px-6 py-4">
 
 
-                            <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'expense_categories&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
-                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'expense_categories&action=delete&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Delete</a>
+                            <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'deposit_categories&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
+                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'deposit_categories&action=delete&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Delete</a>
 
                         </td>
                     </tr>

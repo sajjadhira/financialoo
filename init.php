@@ -29,14 +29,14 @@ function financialoo_add_menu()
     # add submenu
     # lets make an array of submenus
     $submenus = [
-        'rols' => 'Roles',
-        'members' => 'Members',
-        'deposit_categories' => 'Deposit Categories',
         'deposits' => 'Deposits',
-        'expense_categories' => 'Expense Categories',
         'expenses' => 'Expenses',
-        'withdrawals' => 'Withdrawals',
         'transactions' => 'Transactions',
+        'withdrawals' => 'Withdrawals',
+        'members' => 'Members',
+        'expense_categories' => 'Expense Categories',
+        'deposit_categories' => 'Deposit Categories',
+        'rols' => 'Roles',
     ];
 
     foreach ($submenus as $key => $value) {
