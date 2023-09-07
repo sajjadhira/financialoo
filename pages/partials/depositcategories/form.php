@@ -22,7 +22,7 @@ if ($action == "form") {
     $category_status = '';
 
     global $wpdb;
-    $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'deposite_categories';
+    $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'deposits_categories';
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -80,7 +80,7 @@ if ($action == "form") {
                             )
                         );
 
-                        $message = ['type' => 'success', 'color' => 'green', 'message' => 'Deposite Category added successfully.'];
+                        $message = ['type' => 'success', 'color' => 'green', 'message' => 'Deposit Category added successfully.'];
                     } else {
 
                         // update into expense_categories table
@@ -95,7 +95,7 @@ if ($action == "form") {
                             array('id' => $id)
                         );
 
-                        $message = ['type' => 'success', 'color' => 'green', 'message' => 'Deposite Category updated successfully.'];
+                        $message = ['type' => 'success', 'color' => 'green', 'message' => 'Deposit Category updated successfully.'];
                     }
                 }
 

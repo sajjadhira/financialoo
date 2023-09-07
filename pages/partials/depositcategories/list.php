@@ -37,7 +37,7 @@
 
                 <?php
                 global $wpdb;
-                $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'deposite_categories';
+                $table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'deposits_categories';
                 $sql = "SELECT * FROM $table_name";
                 $results = $wpdb->get_results($sql);
                 foreach ($results as $result) {

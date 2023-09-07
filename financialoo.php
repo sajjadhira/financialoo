@@ -65,7 +65,7 @@ function financialoo_activation_calllback()
     dbDelta($sql);
 
     # deposite_categories table
-    $table_name = $prefix . FINANCIALOO_PREFIX . 'deposite_categories';
+    $table_name = $prefix . FINANCIALOO_PREFIX . 'deposits_categories';
     $sql = "CREATE TABLE `$table_name` (
         `id` bigint NOT NULL AUTO_INCREMENT,
         `name` varchar(255) NOT NULL,
@@ -80,6 +80,7 @@ function financialoo_activation_calllback()
     $table_name = $prefix . FINANCIALOO_PREFIX . 'deposits';
     $sql = "CREATE TABLE `$table_name` (
         `id` bigint NOT NULL AUTO_INCREMENT,
+        `category_id` bigint NOT NULL,
         `member_id` bigint NOT NULL,
         `wp_user_id` bigint NOT NULL,
         `amount` decimal(10,2) NOT NULL,
