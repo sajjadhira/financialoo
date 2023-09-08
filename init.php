@@ -36,7 +36,7 @@ function financialoo_add_menu()
         'members' => 'Members',
         'expense_categories' => 'Expense Categories',
         'deposit_categories' => 'Deposit Categories',
-        'rols' => 'Roles',
+        'roles' => 'Roles',
     ];
 
     foreach ($submenus as $key => $value) {

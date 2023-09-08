@@ -29,6 +29,12 @@
                     </th>
 
                     <th scope="col" class="px-6 py-3">
+                        Date
+                    </th>
+
+
+
+                    <th scope="col" class="px-6 py-3">
                         Actions
                     </th>
                 </tr>
@@ -78,9 +84,15 @@
 
                             $member = get_user_by('id', $result->member_id);
 
-                            echo  esc_html($member->user_login);
+                            echo  esc_html($member->display_name);
                             ?>
 
+                        </td>
+
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <?php
+                            echo  esc_html(date('d F Y h:i A', strtotime($result->created_at)));
+                            ?>
                         </td>
 
                         <td class="px-6 py-4">
