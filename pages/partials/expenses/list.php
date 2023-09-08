@@ -24,6 +24,13 @@
                         Amount
                     </th>
 
+
+                    <th scope="col" class="px-6 py-3">
+                        Date
+                    </th>
+
+
+
                     <th scope="col" class="px-6 py-3">
                         Actions
                     </th>
@@ -66,6 +73,13 @@
                             echo  number_format(esc_html($result->amount));
                             ?>
 
+                        </td>
+
+
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <?php
+                            echo  esc_html(date('d F Y h:i A', strtotime($result->created_at)));
+                            ?>
                         </td>
 
                         <td class="px-6 py-4">

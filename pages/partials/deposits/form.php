@@ -13,6 +13,8 @@ if ($action == "form") {
 
     $action_button = 'Save';
     $id = $category_id = $amount = $member_id = null;
+    // $default_date = current time
+    $default_date = date('Y-m-d\TH:i:s', time());
 
     global $wpdb;
     $prefix = $wpdb->prefix;
@@ -49,6 +51,7 @@ if ($action == "form") {
             $category_id = $results[0]->category_id;
             $amount = $results[0]->amount;
             $member_id = $results[0]->member_id;
+            $default_date = date('Y-m-d\TH:i:s', strtotime($results[0]->created_at));
         }
     }
 
@@ -57,12 +60,17 @@ if ($action == "form") {
         if (!isset($_POST[FINANCIALOO_PREFIX . 'deposits_nonce_field']) || !wp_verify_nonce($_POST[FINANCIALOO_PREFIX . 'deposits_nonce_field'], FINANCIALOO_PREFIX . 'deposits_nonce_action')) {
             $message = ['type' => 'error', 'color' => 'red', 'message' => 'Sorry, your nonce did not verify.'];
         } else {
-            if (!isset($_POST["amount"]) || !isset($_POST["category_id"]) || !isset($_POST["member_id"])) {
+            if (!isset($_POST["amount"]) || !isset($_POST["category_id"]) || !isset($_POST["member_id"]) || !isset($_POST["date"])) {
                 $message = ['type' => 'error', 'color' => 'red', 'message' => 'Please fill all fields.'];
             } else {
                 $amount = sanitize_text_field($_POST["amount"]);
                 $category_id = sanitize_text_field($_POST["category_id"]);
                 $member_id = sanitize_text_field($_POST["member_id"]);
+                $date = sanitize_text_field($_POST["date"]);
+                // convert date to mysql format
+                $date = date('Y-m-d H:i:s', strtotime($date));
+                // $default_date format 
+                $default_date = date('Y-m-d\TH:i:s', strtotime($date));
 
                 # get current user id
 
@@ -81,7 +89,7 @@ if ($action == "form") {
                             'category_id' => $category_id,
                             'wp_user_id' => $user_id,
                             'member_id' => $member_id,
-                            'created_at' => current_time('mysql')
+                            'created_at' => $date
                         )
                     );
 
@@ -104,7 +112,7 @@ if ($action == "form") {
                             'category_id' => $category_id,
                             'wp_user_id' => $user_id,
                             'member_id' => $member_id,
-                            'created_at' => current_time('mysql')
+                            'created_at' => $date
                         ),
                         array('id' => $id)
                     );
@@ -161,6 +169,14 @@ if ($action == "form") {
                                                                         ?></option>
                 <?php } ?>
             </select>
+
+        </div>
+
+
+        <div class="mb-4 mt-4">
+            <label for="date" class="block text-gray-700 font-medium mb-2">Date*</label>
+            <!-- input for datetime and default will be $default_date -->
+            <input name="date" id="date" type="datetime-local" class="w-2/3 px-3 py-2 border rounded-md focus:ring focus:ring-blue-300" placeholder="Date" value="<?php echo $default_date; ?>" required>
 
         </div>
 
