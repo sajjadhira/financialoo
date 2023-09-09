@@ -27,3 +27,25 @@ function include_page($title, $function_name)
         }
     }
 }
+
+function financialoo_get_role_by_id($id)
+{
+    // get role from FINANCIALOO_PREFIX . 'roles' table according to id
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $table_name = $prefix . FINANCIALOO_PREFIX . 'roles';
+    $sql = "SELECT * FROM $table_name WHERE id = $id";
+    $result = $wpdb->get_row($sql);
+    if ($result)
+        return $result->name;
+}
+
+function finacialoo_get_roles()
+{
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $table_name = $prefix . FINANCIALOO_PREFIX . 'roles';
+    $sql = "SELECT * FROM $table_name";
+    $results = $wpdb->get_results($sql);
+    return $results;
+}
