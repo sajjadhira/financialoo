@@ -83,8 +83,8 @@
                         <td class="px-6 py-4">
 
 
-                            <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'deposits&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
-                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'deposits&action=delete&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Delete</a>
+                            <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'transactions&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
+                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'transactions&action=delete&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Delete</a>
 
                         </td>
                     </tr>
