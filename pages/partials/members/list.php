@@ -21,6 +21,9 @@
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Balance
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Role
                     </th>
 
@@ -50,6 +53,19 @@
                             echo esc_html($user->display_name);
                             ?>
                         </th>
+
+                        <th class="px-6 py-4">
+                            <?php
+                            // get sum of amount from transactions table of member_id
+                            $transaction_table_name = $prefix . FINANCIALOO_PREFIX . 'transactions';
+                            $transaction_sql = "SELECT SUM(amount) as balance FROM $transaction_table_name WHERE member_id = $result->id";
+                            $transaction_results = $wpdb->get_results($transaction_sql);
+                            $balance = $transaction_results[0]->balance;
+                            $balance = $balance ? $balance : 0;
+                            echo esc_html($balance);
+
+                            ?>
+                        </th>
                         <th class="px-6 py-4">
                             <?php
                             $role = financialoo_get_role_by_id($result->role_id);
@@ -62,7 +78,7 @@
 
                             <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'members&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
                             | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'members&action=delete&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Delete</a>
-                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'deposits&action=list&user=' . $result->wp_user_id) ?>" class="text-blue-600 hover:text-blue-900">Deposits</a>
+                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'transactions&action=list&user=' . $result->wp_user_id) ?>" class="text-blue-600 hover:text-blue-900">Transactions</a>
 
                         </td>
                     </tr>
