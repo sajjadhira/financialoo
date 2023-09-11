@@ -24,7 +24,7 @@
                         Amount
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Role
+                        Status
                     </th>
 
                     <th scope="col" class="px-6 py-3">
@@ -49,7 +49,7 @@
                         <th class="px-6 py-4">
                             <?php
                             // get name from member wp_user_id from wp_users table
-                            $user = get_user_by('id', $result->wp_user_id);
+                            $user = get_user_by('id', $result->member_id);
                             echo esc_html($user->display_name);
                             ?>
                         </th>
@@ -57,28 +57,37 @@
                         <th class="px-6 py-4">
                             <?php
                             // get sum of amount from transactions table of member_id
-                            $transaction_table_name = $prefix . FINANCIALOO_PREFIX . 'transactions';
-                            $transaction_sql = "SELECT SUM(amount) as balance FROM $transaction_table_name WHERE member_id = $result->id";
-                            $transaction_results = $wpdb->get_results($transaction_sql);
-                            $balance = $transaction_results[0]->balance;
-                            $balance = $balance ? $balance : 0;
-                            echo esc_html($balance);
+                            echo $result->amount;
 
                             ?>
                         </th>
                         <th class="px-6 py-4">
                             <?php
-                            $role = financialoo_get_role_by_id($result->role_id);
-                            echo esc_html($role);
+                            // declear status
+
+                            if ($result->status == 0) {
+                                $status = "Pending";
+                                $color = "yellow";
+                            } else if ($result->status == 1) {
+                                $status = "Approved";
+                                $color = "green";
+                            } else if ($result->status == 2) {
+                                $status = "Rejected";
+                                $color = "red";
+                            } else {
+                                $status = "Unknown";
+                                $color = "gray";
+                            }
+
+                            echo '<span class="bg-' . $color . '-100 text-' . $color . '-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-' . $color . '-900 dark:text-' . $color . '-300">' . $status . '</span>';
+
                             ?>
                         </th>
 
                         <td class="px-6 py-4">
 
-
-                            <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'members&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
-                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'members&action=delete&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Delete</a>
-                            | <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'transactions&action=list&user=' . $result->wp_user_id) ?>" class="text-blue-600 hover:text-blue-900">Transactions</a>
+                            <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=approve&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900" onclick="return confirm('Are you sure want to approve the withdrwal request?');">Approve</a>
+                            | <a href=" <?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=decline&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Decline</a>
 
                         </td>
                     </tr>
