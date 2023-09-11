@@ -27,8 +27,8 @@ function financialoo_withdrawals()
       <?php
       if ($action == "form") {
         include FINANCIALOO_PLUGIN_DIR . '/pages/partials/withdrawals/form.php';
-      } else if ($action == "delete") {
-        include FINANCIALOO_PLUGIN_DIR . '/pages/partials/withdrawals/delete.php';
+      } else if ($action == "action") {
+        include FINANCIALOO_PLUGIN_DIR . '/pages/partials/withdrawals/action.php';
       } else {
         include FINANCIALOO_PLUGIN_DIR . '/pages/partials/withdrawals/list.php';
       }
