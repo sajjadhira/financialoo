@@ -30,7 +30,7 @@
                     <?php
                     // get current user id
                     $current_user = wp_get_current_user()->ID;
-                    $role = financialoo_get_role_by_id($current_user);
+                    $role = finacialoo_get_current_role();
 
                     ?>
                     <th scope="col" class="px-6 py-3">
@@ -99,12 +99,12 @@
                             <?php
                             }
 
-                            if ($role == "cashier") {
+                            if ($role == "cashier" && $result->status == 0) {
                             ?>
 
 
-                                <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=approve&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900" onclick="return confirm('Are you sure want to approve the withdrwal request?');">Approve</a>
-                                | <a href=" <?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=decline&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Decline</a>
+                                ⦾ <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=approve&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900" onclick="return confirm('Are you sure want to approve the withdrwal request?');">Approve</a>
+                                ⦾ <a href=" <?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=decline&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Decline</a>
 
 
                             <?php

@@ -68,8 +68,8 @@
                         </th>
                         <th class="px-6 py-4">
                             <?php
-                            $role = financialoo_get_role_by_id($result->role_id);
-                            echo esc_html($role);
+                            $role = financialoo_get_role_by_id($result->wp_user_id);
+                            echo esc_html(ucwords($role));
                             ?>
                         </th>
 

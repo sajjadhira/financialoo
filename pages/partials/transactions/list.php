@@ -52,7 +52,7 @@
 
                         <th class="px-6 py-4">
                             <?php
-                            echo esc_html($result->transaction_id);
+                            echo esc_html($result->id);
                             ?>
                         </th>
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

@@ -7,6 +7,9 @@ if (isset($_GET['action'])) {
     $action = '';
 }
 
+
+$role = finacialoo_get_current_role();
+
 if ($role == "cashier" && ($action == "approve" || $action == "decline")) {
     global $wpdb;
     if (isset($_GET['id'])) {
@@ -29,25 +32,28 @@ if ($role == "cashier" && ($action == "approve" || $action == "decline")) {
         $id = $results[0]->id;
         # update withdrawal status
         if ($action == "approve") {
+
+
+            // insert data into transactions table
+            $transaction_table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'transactions';
+
+            //  add negetive sign to amount
+            $amount = $results[0]->amount * (-1);
+            $transaction_data = array(
+                'member_id' => $results[0]->member_id,
+                'amount' => $amount,
+                'type' => 'withdrawal',
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s')
+            );
+
+            $wpdb->insert($transaction_table_name, $transaction_data);
+            $message = ['type' => 'success', 'color' => 'green', 'message' => 'Withdrawals has been ' . $action . ' successfully.'];
             $wpdb->update($table_name, array('status' => 1), array('id' => $id));
         } else {
+            $message = ['type' => 'success', 'color' => 'green', 'message' => 'Withdrawals has been ' . $action . ' successfully.'];
             $wpdb->update($table_name, array('status' => 2), array('id' => $id));
         }
-
-        // insert data into transactions table
-        $transaction_table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'transactions';
-
-        //  add negetive sign to amount
-        $amount = $results[0]->amount * (-1);
-        $transaction_data = array(
-            'member_id' => $results[0]->member_id,
-            'amount' => $amount,
-            'type' => 'withdrawal',
-            'status' => 1,
-            'created_at' => date('Y-m-d H:i:s')
-        );
-
-        $message = ['type' => 'success', 'color' => 'green', 'message' => 'Withdrawals has been ' . $action . ' successfully.'];
     }
 
     include FINANCIALOO_PLUGIN_DIR . '/pages/partials/withdrawals/list.php';

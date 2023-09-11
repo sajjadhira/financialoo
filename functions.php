@@ -28,16 +28,29 @@ function include_page($title, $function_name)
     }
 }
 
+function get_member_info($id)
+{
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $table_name = $prefix . FINANCIALOO_PREFIX . 'members';
+    $sql = "SELECT * FROM $table_name WHERE wp_user_id = $id";
+    $result = $wpdb->get_row($sql);
+    return $result;
+}
+
 function financialoo_get_role_by_id($id)
 {
     // get role from FINANCIALOO_PREFIX . 'roles' table according to id
     global $wpdb;
     $prefix = $wpdb->prefix;
+
+    $get_member_info = get_member_info($id);
+    $role_id = $get_member_info->role_id;
     $table_name = $prefix . FINANCIALOO_PREFIX . 'roles';
-    $sql = "SELECT * FROM $table_name WHERE id = $id";
+    $sql = "SELECT * FROM $table_name WHERE id = $role_id";
     $result = $wpdb->get_row($sql);
     if ($result)
-        return $result->name;
+        return strtolower($result->name);
 }
 
 function finacialoo_get_roles()
@@ -48,4 +61,11 @@ function finacialoo_get_roles()
     $sql = "SELECT * FROM $table_name";
     $results = $wpdb->get_results($sql);
     return $results;
+}
+
+function finacialoo_get_current_role()
+{
+    $current_user = wp_get_current_user()->ID;
+    $role = financialoo_get_role_by_id($current_user);
+    return $role;
 }
