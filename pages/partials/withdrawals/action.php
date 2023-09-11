@@ -36,9 +36,12 @@ if ($role == "cashier" && ($action == "approve" || $action == "decline")) {
 
         // insert data into transactions table
         $transaction_table_name = $wpdb->prefix . FINANCIALOO_PREFIX . 'transactions';
+
+        //  add negetive sign to amount
+        $amount = $results[0]->amount * (-1);
         $transaction_data = array(
             'member_id' => $results[0]->member_id,
-            'amount' => $results[0]->amount,
+            'amount' => $amount,
             'type' => 'withdrawal',
             'status' => 1,
             'created_at' => date('Y-m-d H:i:s')

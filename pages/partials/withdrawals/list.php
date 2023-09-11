@@ -31,14 +31,14 @@
                     // get current user id
                     $current_user = wp_get_current_user()->ID;
                     $role = financialoo_get_role_by_id($current_user);
-                    if ($role == "cashier") {
+
+                    print_r($role);
+
                     ?>
-                        <th scope="col" class="px-6 py-3">
-                            Actions
-                        </th>
-                    <?php
-                    }
-                    ?>
+                    <th scope="col" class="px-6 py-3">
+                        Actions
+                    </th>
+
                 </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@
                             // declear status
 
                             if ($result->status == 0) {
-                                $status = "Pending";
+                                $status = "Requested";
                                 $color = "yellow";
                             } else if ($result->status == 1) {
                                 $status = "Approved";
@@ -92,19 +92,27 @@
 
                             ?>
                         </th>
-                        <?php
+                        <td class="px-6 py-4">
+                            <?php
 
-                        if ($role == "cashier") {
-                        ?>
-                            <td class="px-6 py-4">
+                            if ($current_user == $result->member_id && $result->status == 0) {
+                            ?>
+                                <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=form&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900">Edit</a>
+                            <?php
+                            }
+
+                            if ($role == "cashier") {
+                            ?>
+
 
                                 <a href="<?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=approve&id=' . $result->id) ?>" class="text-blue-600 hover:text-blue-900" onclick="return confirm('Are you sure want to approve the withdrwal request?');">Approve</a>
                                 | <a href=" <?php echo admin_url('admin.php?page=' . FINANCIALOO_PREFIX . 'withdrawals&action=decline&id=' . $result->id) ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure want to delete this <?php echo $title; ?>? Related all data will be deleted and will be undo.');">Decline</a>
 
-                            </td>
-                        <?php
-                        }
-                        ?>
+
+                            <?php
+                            }
+                            ?>
+                        </td>
                     </tr>
                 <?php
                 }

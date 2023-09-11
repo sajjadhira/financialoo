@@ -11,9 +11,11 @@ if (isset($_GET['action'])) {
 
 if ($action == "form") {
 
-    $action_button = 'Save';
+    $action_button = 'Make Request';
     $id = null;
     $withdrawal_status = $amount = 0;
+    $member_id = wp_get_current_user()->ID;
+
 
     global $wpdb;
     $prefix = $wpdb->prefix;
@@ -25,7 +27,7 @@ if ($action == "form") {
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $id = sanitize_text_field($id);
-        $action_button = 'Update';
+        $action_button = 'Update Request';
 
         // get data from withdrawals_categories table
 
@@ -60,19 +62,22 @@ if ($action == "form") {
                         $table_name,
                         array(
                             'member_id' => $member_id,
+                            'amount' => $amount,
                             'created_at' => current_time('mysql')
                         )
                     );
                 } else {
 
-                    if ($withdrawal_status == 0) {
+
+                    if ($withdrawal_status == 0 && $member_id == $results[0]->member_id) {
                         // update withdrawal record
 
                         $withdrawal_update = $wpdb->update(
                             $table_name,
                             array(
                                 'member_id' => $member_id,
-                                'updated_at' => current_time('mysql')
+                                'amount' => $amount,
+                                'created_at' => current_time('mysql')
                             ),
                             array('id' => $id)
                         );
@@ -107,9 +112,6 @@ if ($action == "form") {
 
         <?php
         // get all users from wp_users table
-
-        $users = get_users();
-        $roles = finacialoo_get_roles();
         ?>
         <div class="mb-4 mt-4">
             <label for="amount" class="block text-gray-700 font-medium mb-2">Amount*</label>
