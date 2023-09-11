@@ -32,8 +32,6 @@
                     $current_user = wp_get_current_user()->ID;
                     $role = financialoo_get_role_by_id($current_user);
 
-                    print_r($role);
-
                     ?>
                     <th scope="col" class="px-6 py-3">
                         Actions
