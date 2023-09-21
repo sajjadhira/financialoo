@@ -24,7 +24,7 @@ function financialoo_home_page()
               <h5 class="font-bold uppercase text-gray-600">Total Income</h5>
             </div>
             <div class="p-5">
-              <h1 class="text-3xl text-gray-800 font-bold">£ 0.00</h1>
+              <h1 class="text-3xl text-gray-800 font-bold">&#2547; 0.00</h1>
               <div class="text-sm text-gray-500">Jan 1 - Apr 1</div>
             </div>
           </div>
@@ -35,7 +35,7 @@ function financialoo_home_page()
               <h5 class="font-bold uppercase text-gray-600">Total Expenses</h5>
             </div>
             <div class="p-5">
-              <h1 class="text-3xl text-gray-800 font-bold">£ 0.00</h1>
+              <h1 class="text-3xl text-gray-800 font-bold">&#2547; 0.00</h1>
               <div class="text-sm text-gray-500">Jan 1 - Apr 1</div>
             </div>
           </div>
@@ -46,7 +46,7 @@ function financialoo_home_page()
               <h5 class="font-bold uppercase text-gray-600">Total Balance</h5>
             </div>
             <div class="p-5">
-              <h1 class="text-3xl text-gray-800 font-bold">£ 0.00</h1>
+              <h1 class="text-3xl text-gray-800 font-bold">&#2547; 0.00</h1>
               <div class="text-sm text-gray-500">Jan 1 - Apr 1</div>
             </div>
           </div>
